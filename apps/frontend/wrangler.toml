@@ -4,6 +4,10 @@ compatibility_date = "2024-06-20"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
 
+[[services]]
+binding = "BACKEND"
+service = "cf-next-blog-example-backend"
+
 # Automatically place your workloads in an optimal location to minimize latency.
 # If you are running back-end logic in a Pages Function, running it closer to your back-end infrastructure
 # rather than the end user may result in better performance.
@@ -58,11 +62,7 @@ pages_build_output_dir = ".vercel/output/static"
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
-# Bind another Worker service. Use this binding to call another Worker without network overhead.
-# Docs: https://developers.cloudflare.com/pages/functions/bindings/#service-bindings
-# [[services]]
-# binding = "MY_SERVICE"
-# service = "my-service"
+
 
 # To use different bindings for preview and production environments, follow the examples below.
 # When using environment-specific overrides for bindings, ALL bindings must be specified on a per-environment basis.
