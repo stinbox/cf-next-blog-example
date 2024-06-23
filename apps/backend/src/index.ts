@@ -1,11 +1,4 @@
-import { Hono } from "hono";
 import { WorkerEntrypoint } from "cloudflare:workers";
-
-const app = new Hono();
-
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
 
 export default class BackendApp extends WorkerEntrypoint {
   async fetch() {
