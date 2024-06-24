@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { getRequestContext } from "@cloudflare/next-on-pages";
-import type BackendApp from "../../../../../backend/src/index";
+import type BackendApp from "@cf-next-blog-example/backend";
 
 declare global {
   interface CloudflareEnv {
