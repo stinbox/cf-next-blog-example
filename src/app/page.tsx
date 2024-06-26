@@ -1,13 +1,22 @@
-import { auth, signIn } from "@/auth";
-import Image from "next/image";
+import { auth, signIn, signOut } from "@/auth";
 
-export default async function Home() {
+const Home: React.FC = async () => {
   const session = await auth();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       {session ? (
-        <pre>{JSON.stringify(session, null, 2)}</pre>
+        <div>
+          <pre>{JSON.stringify(session, null, 2)}</pre>
+          <form
+            action={async () => {
+              "use server";
+              await signOut();
+            }}
+          >
+            <button>Sign Out</button>
+          </form>
+        </div>
       ) : (
         <form
           action={async () => {
@@ -20,4 +29,6 @@ export default async function Home() {
       )}
     </main>
   );
-}
+};
+
+export default Home;
