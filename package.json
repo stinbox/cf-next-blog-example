@@ -16,12 +16,15 @@
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.4.1",
+    "@hono/valibot-validator": "^0.3.0",
     "drizzle-orm": "^0.31.2",
     "hono": "^4.4.7",
     "next": "^15.0.0-rc.0",
     "next-auth": "^5.0.0-beta.19",
     "react": "^19.0.0-rc-8971381549-20240625",
-    "react-dom": "^19.0.0-rc-8971381549-20240625"
+    "react-dom": "^19.0.0-rc-8971381549-20240625",
+    "ulid": "^2.3.0",
+    "valibot": "^0.35.0"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.11.3",

@@ -1,3 +1,4 @@
+import { relations, sql } from "drizzle-orm";
 import {
   integer,
   sqliteTable,
@@ -5,6 +6,7 @@ import {
   primaryKey,
 } from "drizzle-orm/sqlite-core";
 import type { AdapterAccountType } from "next-auth/adapters";
+import { ulid } from "ulid";
 
 export const users = sqliteTable("user", {
   id: text("id")
@@ -15,6 +17,10 @@ export const users = sqliteTable("user", {
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
   image: text("image"),
 });
+
+export const usersRelations = relations(users, ({ many }) => ({
+  blogPosts: many(blogPosts),
+}));
 
 export const accounts = sqliteTable(
   "account",
@@ -84,3 +90,31 @@ export const authenticators = sqliteTable(
     }),
   })
 );
+
+const UNIX_EPOCH_MS = sql`(unixepoch() * 1000)`;
+
+export const blogPosts = sqliteTable("blogPost", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => ulid()),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .default(UNIX_EPOCH_MS),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .default(UNIX_EPOCH_MS)
+    .$onUpdate(() => UNIX_EPOCH_MS),
+  createdBy: text("createdBy")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+});
+
+export const blogPostsRelations = relations(blogPosts, ({ one }) => ({
+  user: one(users, {
+    fields: [blogPosts.createdBy],
+    references: [users.id],
+  }),
+}));
