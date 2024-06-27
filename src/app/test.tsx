@@ -11,7 +11,7 @@ export const Test: React.FC = () => {
   useEffect(() => {
     apiClient.api["blog-posts"][":id"]
       .$get({ param: { id: "hoge-fuga" } })
-      .then((res) => res.json())
+      .then<any>((res) => res.json())
       .then(setState);
   }, []);
 
