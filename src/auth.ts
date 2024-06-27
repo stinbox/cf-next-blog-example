@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { database } from "./database";
@@ -10,6 +10,14 @@ import {
   verificationTokens,
 } from "./database-schema";
 
+declare module "next-auth" {
+  export interface Session {
+    user: User & {
+      id: string;
+    };
+  }
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth(() => {
   return {
     providers: [google],
@@ -20,5 +28,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth(() => {
       verificationTokensTable: verificationTokens,
       authenticatorsTable: authenticators,
     }),
+    callbacks: {
+      session({ session, user }) {
+        session.user.id = user.id;
+        return session;
+      },
+    },
   };
 });

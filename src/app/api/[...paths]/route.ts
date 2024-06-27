@@ -1,14 +1,13 @@
-import type { NextRequest } from "next/server";
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { honoApp } from "@/app/hono-app";
 
-export const runtime = "edge";
+const handler = (request: Request) => honoApp.fetch(request);
 
-export async function GET(request: NextRequest) {
-  const { env } = getRequestContext();
-
-  return new Response("Hello world", {
-    headers: {
-      "content-type": "text/plain",
-    },
-  });
-}
+export {
+  handler as GET,
+  handler as POST,
+  handler as PUT,
+  handler as DELETE,
+  handler as PATCH,
+  handler as HEAD,
+  handler as OPTIONS,
+};

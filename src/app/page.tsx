@@ -1,4 +1,5 @@
 import { auth, signIn, signOut } from "@/auth";
+import { Test } from "./test";
 
 const Home: React.FC = async () => {
   const session = await auth();
@@ -27,6 +28,7 @@ const Home: React.FC = async () => {
           <button>Signin with Google</button>
         </form>
       )}
+      <Test />
     </main>
   );
 };
