@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { auth } from "@/auth";
+import { SignInButton } from "./signin-button";
+import { AccountMenu } from "./account-menu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,10 +17,16 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = async ({
   children,
 }) => {
   const session = await auth();
+
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers session={session}>{children}</Providers>
+    <html lang="ja">
+      <body className={`${inter.className} text-neutral-800`}>
+        <Providers session={session}>
+          <div className="fixed right-4 top-4 w-fit">
+            {session ? <AccountMenu session={session} /> : <SignInButton />}
+          </div>
+          {children}
+        </Providers>
       </body>
     </html>
   );
