@@ -8,4 +8,5 @@ export type BlogPost = {
   updatedAt: string;
   createdBy: User;
   publishedAt: string | null;
+  isDraft: boolean;
 };

@@ -14,6 +14,7 @@ export const getBlogPost = async (id: string): Promise<BlogPost | null> => {
           image: true,
         },
       },
+      published: true,
     },
   });
 
@@ -32,5 +33,8 @@ export const getBlogPost = async (id: string): Promise<BlogPost | null> => {
       name: post.user.name,
       image: post.user.image,
     },
+    publishedAt: post.published?.publishedAt.toISOString() ?? null,
+    isDraft:
+      post.published == null || post.updatedAt > post.published.updatedAt,
   };
 };

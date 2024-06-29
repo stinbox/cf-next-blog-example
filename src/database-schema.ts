@@ -94,20 +94,16 @@ export const authenticators = sqliteTable(
 const UNIX_EPOCH_MS = sql`(unixepoch() * 1000)`;
 
 export const blogPosts = sqliteTable("blogPost", {
-  id: text("id")
-    .notNull()
-    .primaryKey()
-    .$defaultFn(() => ulid()),
+  id: text("id").notNull().primaryKey(),
   title: text("title").notNull(),
   content: text("content").notNull(),
-  publishedAt: integer("publishedAt", { mode: "timestamp_ms" }),
   createdAt: integer("createdAt", { mode: "timestamp_ms" })
     .notNull()
     .default(UNIX_EPOCH_MS),
   updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
     .notNull()
     .default(UNIX_EPOCH_MS)
-    .$onUpdate(() => UNIX_EPOCH_MS),
+    .$onUpdate(() => new Date()),
   createdBy: text("createdBy")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
@@ -118,4 +114,31 @@ export const blogPostsRelations = relations(blogPosts, ({ one }) => ({
     fields: [blogPosts.createdBy],
     references: [users.id],
   }),
+  published: one(publishedBlogPosts),
 }));
+
+export const publishedBlogPosts = sqliteTable("publishedBlogPost", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .references(() => blogPosts.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  publishedAt: integer("publishedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .default(UNIX_EPOCH_MS),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .default(UNIX_EPOCH_MS)
+    .$onUpdate(() => new Date()),
+});
+
+export const publishedBlogPostsRelations = relations(
+  publishedBlogPosts,
+  ({ one }) => ({
+    draft: one(blogPosts, {
+      fields: [publishedBlogPosts.id],
+      references: [blogPosts.id],
+    }),
+  })
+);

@@ -1,21 +1,25 @@
 import { database } from "@/database";
-import { blogPosts, users } from "@/database-schema";
+import { blogPosts, publishedBlogPosts, users } from "@/database-schema";
 import { BlogPost } from "@/models/blog-post";
 import { eq } from "drizzle-orm";
 
 export const deleteBlogPost = async (id: string): Promise<BlogPost> => {
-  const deleted = await database()
-    .delete(blogPosts)
-    .where(eq(blogPosts.id, id))
-    .returning()
-    .get();
+  const [[deletedPublishedBlogPost], [deletedBlogPost]] =
+    await database().batch([
+      database()
+        .select()
+        .from(publishedBlogPosts)
+        .where(eq(publishedBlogPosts.id, id)),
 
-  if (deleted == null) {
+      database().delete(blogPosts).where(eq(blogPosts.id, id)).returning(),
+    ]);
+
+  if (deletedBlogPost == null) {
     throw new Error("Blog post not found");
   }
 
   const createdBy = await database().query.users.findFirst({
-    where: eq(users.id, deleted.createdBy),
+    where: eq(users.id, deletedBlogPost.createdBy),
     columns: { id: true, name: true, image: true },
   });
 
@@ -24,15 +28,19 @@ export const deleteBlogPost = async (id: string): Promise<BlogPost> => {
   }
 
   return {
-    id: deleted.id,
-    title: deleted.title,
-    content: deleted.content,
-    createdAt: deleted.createdAt.toISOString(),
-    updatedAt: deleted.updatedAt.toISOString(),
+    id: deletedBlogPost.id,
+    title: deletedBlogPost.title,
+    content: deletedBlogPost.content,
+    createdAt: deletedBlogPost.createdAt.toISOString(),
+    updatedAt: deletedBlogPost.updatedAt.toISOString(),
+    publishedAt: deletedPublishedBlogPost?.publishedAt.toISOString() ?? null,
     createdBy: {
       id: createdBy.id,
       name: createdBy.name,
       image: createdBy.image,
     },
+    isDraft:
+      deletedPublishedBlogPost == null ||
+      deletedBlogPost.updatedAt > deletedPublishedBlogPost.updatedAt,
   };
 };

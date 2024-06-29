@@ -43,6 +43,13 @@
       "when": 1719634299447,
       "tag": "0005_late_sentinels",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1719672726717,
+      "tag": "0006_striped_fantastic_four",
+      "breakpoints": true
     }
   ]
 }

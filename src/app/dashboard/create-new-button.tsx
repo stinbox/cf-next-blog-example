@@ -1,7 +1,6 @@
 "use client";
 
 import { FilePlusIcon } from "lucide-react";
-import { Session } from "next-auth";
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { apiClient } from "@/hono-client";
@@ -19,7 +18,7 @@ export const CreateNewButton: React.FC = () => {
 
     const created = await response.json();
 
-    router.push(`/dashboard/edit/${created.id}`);
+    router.push(`/dashboard/${created.id}`);
   }, null);
 
   return (
