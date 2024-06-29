@@ -2,26 +2,32 @@ import { database } from "@/database";
 import { blogPosts } from "@/database-schema";
 import { BlogPost } from "@/models/blog-post";
 import { Pagination } from "@/models/pagination";
-import { count, desc, eq, sql } from "drizzle-orm";
+import { and, count, desc, eq, isNotNull, sql } from "drizzle-orm";
 
 type GetBlogPostParams = {
   createdBy?: string;
   page: number;
   limit: number;
+  withDrafts?: boolean;
 };
 
 export const getBlogPosts = async ({
   createdBy,
   page,
   limit,
+  withDrafts,
 }: GetBlogPostParams): Promise<Pagination<BlogPost>> => {
-  const condition = createdBy
-    ? eq(blogPosts.createdBy, createdBy)
-    : eq(sql`1`, 1);
+  const conditions = [eq(sql`1`, 1)];
+  if (createdBy) {
+    conditions.push(eq(blogPosts.createdBy, createdBy));
+  }
+  if (!withDrafts) {
+    conditions.push(isNotNull(blogPosts.publishedAt));
+  }
 
   const [foundBlogPosts, [{ totalCount }]] = await database().batch([
     database().query.blogPosts.findMany({
-      where: condition,
+      where: and(...conditions),
       limit: limit + 1, // Fetch one more to check if there is a next page
       offset: (page - 1) * limit,
       orderBy: desc(blogPosts.createdAt),
@@ -33,7 +39,7 @@ export const getBlogPosts = async ({
         totalCount: count(),
       })
       .from(blogPosts)
-      .where(condition),
+      .where(and(...conditions)),
   ]);
 
   return {

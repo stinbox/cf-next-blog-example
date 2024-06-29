@@ -30,6 +30,7 @@ const Page: React.FC<{ searchParams: unknown }> = async ({ searchParams }) => {
     createdBy: session.user.id,
     page: parsedParams.output.page ?? 1,
     limit: 20,
+    withDrafts: true,
   });
 
   if (posts.items.length === 0 && posts.page > 1) {
@@ -39,7 +40,7 @@ const Page: React.FC<{ searchParams: unknown }> = async ({ searchParams }) => {
   return (
     <div className="pt-24">
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 hover:scale-110 transition-transform">
-        <CreateNewButton session={session} />
+        <CreateNewButton />
       </div>
       <ul className="border-y-2 border-neutral-700 divide-y-2 divide-neutral-700">
         {posts.items.map((post) => (
