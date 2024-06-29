@@ -12,6 +12,7 @@ const Home: React.FC = async () => {
 
   return (
     <main>
+      <h1 className="text-2xl font-bold mb-16">新着記事</h1>
       <ul className="grid grid-cols-auto-fill-72 gap-6">
         {blogPosts.items.map((blogPost) => (
           <li key={blogPost.id} className="contents">

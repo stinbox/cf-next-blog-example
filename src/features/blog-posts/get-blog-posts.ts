@@ -2,7 +2,7 @@ import { database } from "@/database";
 import { blogPosts } from "@/database-schema";
 import { BlogPost } from "@/models/blog-post";
 import { Pagination } from "@/models/pagination";
-import { and, count, desc, eq, sql } from "drizzle-orm";
+import { count, desc, eq, sql } from "drizzle-orm";
 
 type GetBlogPostParams = {
   createdBy?: string;
