@@ -76,12 +76,12 @@ export const getBlogPosts = async ({
         .select({
           ...getTableColumns(publishedBlogPosts),
           draft: {
-            ...getTableColumns(blogPosts),
+            createdAt: blogPosts.createdAt,
           },
           user: {
-            id: users.id,
-            name: users.name,
-            image: users.image,
+            id: sql<string>`${users.id}`.as("user_id"),
+            name: sql<string>`${users.name}`.as("user_name"),
+            image: sql<string>`${users.image}`.as("user_image"),
           },
         })
         .from(publishedBlogPosts)
