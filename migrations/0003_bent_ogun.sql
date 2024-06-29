@@ -1,0 +1,1 @@
+ALTER TABLE `blogPost` ADD `publishedAt` integer;

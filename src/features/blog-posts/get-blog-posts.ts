@@ -48,6 +48,7 @@ export const getBlogPosts = async ({
         name: post.user.name,
         image: post.user.image,
       },
+      publishedAt: post.publishedAt?.toISOString() ?? null,
     })),
     limit: limit,
     page: page,

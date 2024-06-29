@@ -5,8 +5,9 @@ import { eq } from "drizzle-orm";
 import * as v from "valibot";
 
 export const CreateBlogPostInput = v.object({
-  title: v.pipe(v.string(), v.minLength(1), v.maxLength(100)),
-  content: v.string(),
+  title: v.pipe(v.string(), v.maxLength(100)),
+  content: v.pipe(v.string(), v.maxLength(100000)),
+  published: v.boolean(),
 });
 
 type CreateBlogPostInput = v.InferOutput<typeof CreateBlogPostInput>;
@@ -22,6 +23,7 @@ export const createBlogPost = async (
         title: input.title,
         content: input.content,
         createdBy: userId,
+        publishedAt: input.published ? new Date() : null,
       })
       .returning(),
 

@@ -7,6 +7,7 @@ import * as v from "valibot";
 export const UpdateBlogPostInput = v.object({
   title: v.optional(v.pipe(v.string(), v.minLength(1), v.maxLength(100))),
   content: v.optional(v.string()),
+  operation: v.optional(v.picklist(["publish", "unpublish"])),
 });
 
 type UpdateBlogPostInput = v.InferOutput<typeof UpdateBlogPostInput>;
@@ -20,6 +21,12 @@ export const updateBlogPost = async (
     .set({
       title: input.title,
       content: input.content,
+      publishedAt:
+        input.operation === "publish"
+          ? new Date()
+          : input.operation === "unpublish"
+          ? null
+          : undefined,
     })
     .where(eq(blogPosts.id, id))
     .returning()

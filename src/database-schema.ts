@@ -6,7 +6,7 @@ import {
   primaryKey,
 } from "drizzle-orm/sqlite-core";
 import type { AdapterAccountType } from "next-auth/adapters";
-import { ulid } from "ulid";
+import { ulid } from "ulidx";
 
 export const users = sqliteTable("user", {
   id: text("id")
@@ -100,6 +100,7 @@ export const blogPosts = sqliteTable("blogPost", {
     .$defaultFn(() => ulid()),
   title: text("title").notNull(),
   content: text("content").notNull(),
+  publishedAt: integer("publishedAt", { mode: "timestamp_ms" }),
   createdAt: integer("createdAt", { mode: "timestamp_ms" })
     .notNull()
     .default(UNIX_EPOCH_MS),

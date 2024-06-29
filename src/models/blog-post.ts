@@ -7,4 +7,5 @@ export type BlogPost = {
   createdAt: string;
   updatedAt: string;
   createdBy: User;
+  publishedAt: string | null;
 };

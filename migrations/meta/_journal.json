@@ -15,6 +15,34 @@
       "when": 1719413709126,
       "tag": "0001_watery_virginia_dare",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1719632077323,
+      "tag": "0002_legal_star_brand",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1719632526241,
+      "tag": "0003_bent_ogun",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1719634266053,
+      "tag": "0004_worthless_captain_marvel",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1719634299447,
+      "tag": "0005_late_sentinels",
+      "breakpoints": true
     }
   ]
 }
