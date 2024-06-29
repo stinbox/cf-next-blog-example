@@ -5,7 +5,7 @@ import { Pagination } from "@/models/pagination";
 import { and, count, desc, eq, sql } from "drizzle-orm";
 
 type GetBlogPostParams = {
-  createdBy: string | undefined;
+  createdBy?: string;
   page: number;
   limit: number;
 };
