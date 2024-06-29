@@ -1,5 +1,6 @@
 import {
   CircleUserRoundIcon,
+  HomeIcon,
   LayoutDashboardIcon,
   LogOutIcon,
 } from "lucide-react";
@@ -35,6 +36,15 @@ export const AccountMenu: React.FC<{ session: Session }> = ({ session }) => {
         }}
         className="rounded-2xl border-2 border-neutral-700 shadow-xl w-52 overflow-hidden bg-white divide-y-2 divide-neutral-700"
       >
+        <MenuItem>
+          <Link
+            className="flex gap-1.5 items-center w-full font-bold h-12 hover:bg-neutral-100 text-start px-2"
+            href="/"
+          >
+            <HomeIcon className="size-6" />
+            ホーム
+          </Link>
+        </MenuItem>
         <MenuItem>
           <Link
             className="flex gap-1.5 items-center w-full font-bold h-12 hover:bg-neutral-100 text-start px-2"
