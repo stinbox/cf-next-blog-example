@@ -7,7 +7,7 @@ const Page: React.FC<{
     blogPostId: string;
   };
 }> = async ({ params }) => {
-  const blogPost = await getBlogPost(params.blogPostId);
+  const blogPost = await getBlogPost(params.blogPostId, { withDraft: true });
 
   if (!blogPost) {
     return notFound();

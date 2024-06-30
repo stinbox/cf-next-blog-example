@@ -22,7 +22,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = async ({
     <html lang="ja">
       <body className={`${inter.className} text-neutral-800`}>
         <Providers session={session}>
-          <div className="fixed right-4 top-4 w-fit">
+          <div className="fixed right-4 top-4 w-fit z-10">
             {session ? <AccountMenu session={session} /> : <SignInButton />}
           </div>
           <div className="px-4 py-24">{children}</div>
