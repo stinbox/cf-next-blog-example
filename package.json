@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "analyze": "ANALYZE=true next build",
     "tsc:watch": "tsc --watch",
     "pages:build": "npx @cloudflare/next-on-pages",
     "preview": "npm run pages:build && wrangler pages dev",
@@ -20,7 +21,6 @@
     "@headlessui/react": "^2.1.1",
     "@hono/valibot-validator": "^0.3.0",
     "@lexical/react": "^0.16.0",
-    "@shikijs/rehype": "^1.10.0",
     "date-fns": "^3.6.0",
     "drizzle-orm": "^0.31.2",
     "hono": "^4.4.7",
@@ -40,6 +40,7 @@
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.11.3",
     "@cloudflare/workers-types": "^4.20240620.0",
+    "@next/bundle-analyzer": "^14.2.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

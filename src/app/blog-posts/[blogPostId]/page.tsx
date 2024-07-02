@@ -5,7 +5,6 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
-import rehypeShiki from "@shikijs/rehype";
 import classes from "./content.module.css";
 import { format } from "date-fns";
 import { CircleUserRoundIcon, PencilLineIcon } from "lucide-react";
@@ -26,9 +25,6 @@ const Page: React.FC<{
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeStringify)
-    .use(rehypeShiki, {
-      theme: "dark-plus",
-    })
     .process(blogPost.content);
 
   return (
