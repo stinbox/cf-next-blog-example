@@ -14,7 +14,8 @@
     "deploy": "npm run pages:build && wrangler pages deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts",
     "db:migration:generate": "drizzle-kit generate",
-    "db:migration:apply": "wrangler d1 migrations apply cf-next-blog-example --local"
+    "db:migration:apply": "wrangler d1 migrations apply cf-next-blog-example --local",
+    "db:migration:apply:prod": "wrangler d1 migrations apply cf-next-blog-example --remote"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.4.1",
