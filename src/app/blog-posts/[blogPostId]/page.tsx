@@ -8,12 +8,15 @@ import { unified } from "unified";
 import classes from "./content.module.css";
 import { format } from "date-fns";
 import { CircleUserRoundIcon, PencilLineIcon } from "lucide-react";
+import { Metadata } from "next";
 
-const Page: React.FC<{
+type Props = {
   params: {
     blogPostId: string;
   };
-}> = async ({ params }) => {
+};
+
+const Page: React.FC<Props> = async ({ params }) => {
   const blogPost = await getBlogPost(params.blogPostId);
 
   if (!blogPost) {
@@ -76,3 +79,21 @@ const Page: React.FC<{
 };
 
 export default Page;
+
+export const generateMetadata = async ({
+  params: { blogPostId },
+}: Props): Promise<Metadata> => {
+  const blogPost = await getBlogPost(blogPostId);
+
+  if (!blogPost) {
+    return notFound();
+  }
+
+  return {
+    title: blogPost.title,
+    openGraph: {
+      type: "article",
+      title: blogPost.title,
+    },
+  };
+};
