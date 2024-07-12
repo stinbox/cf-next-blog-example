@@ -11,6 +11,8 @@ binding = "DB"
 database_name = "cf-next-blog-example"
 database_id = "4fbf4f9d-8234-4d18-89cd-f455a50ff87e"
 
+[vars]
+WEBSITE_DOMAIN = "cf-next-blog-example.pages.dev"
 
 # Automatically place your workloads in an optimal location to minimize latency.
 # If you are running back-end logic in a Pages Function, running it closer to your back-end infrastructure
