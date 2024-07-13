@@ -7,7 +7,10 @@ import { SignInButton } from "./signin-button";
 import { AccountMenu } from "./account-menu";
 import { getRequestContext } from "@cloudflare/next-on-pages";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
 export const generateMetadata = (): Metadata => {
   const { env } = getRequestContext();
@@ -26,7 +29,7 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = async ({
 
   return (
     <html lang="ja">
-      <body className={`${inter.className} text-neutral-800`}>
+      <body className={`${inter.variable} text-neutral-800 font-sans`}>
         <Providers session={session}>
           <div className="fixed right-4 top-4 w-fit z-10">
             {session ? <AccountMenu session={session} /> : <SignInButton />}
