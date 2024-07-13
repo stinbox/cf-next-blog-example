@@ -35,6 +35,9 @@ const RootLayout: React.FC<{ children: React.ReactNode }> = async ({
             {session ? <AccountMenu session={session} /> : <SignInButton />}
           </div>
           <div className="px-4 py-24">{children}</div>
+          <p className="text-xxs text-neutral-600 p-4">
+            このサイトは実装例のため、予告なくクローズされる可能性があります。
+          </p>
         </Providers>
       </body>
     </html>
